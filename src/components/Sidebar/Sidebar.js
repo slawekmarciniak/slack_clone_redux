@@ -1,8 +1,22 @@
 import styled from "styled-components";
 import EditIcon from "@mui/icons-material/Edit";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import InsertCommentIcon from "@mui/icons-material/InsertComment";
+import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SyncIcon from "@mui/icons-material/Sync";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
+import AddIcon from "@mui/icons-material/Add";
+import SidebarOption from "./components/SidebarOption";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { db } from "../../firebase";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collection } from "firebase/firestore";
 
 const Sidebar = () => {
+  const [channels, loading, error] = useCollection(collection(db, "rooms"), {
+    snapshotListenOptions: { includeMetadataChanges: true },
+  });
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -15,6 +29,18 @@ const Sidebar = () => {
         </SidebarInfo>
         <EditIcon />
       </SidebarHeader>
+      <SidebarOption Icon={InsertCommentIcon} text="Threads" />
+      <SidebarOption Icon={AlternateEmailIcon} text="Mentions reactions" />
+      <SidebarOption Icon={SyncIcon} text="Slack Connect" />
+      <SidebarOption Icon={MoreVertIcon} text="More" />
+      <SidebarOption Icon={ArrowRightIcon} text="Direct messages" />
+      <SidebarOption Icon={ArrowDropDownIcon} text="Channels" />
+      <hr />
+      <SidebarOption Icon={AddIcon} addChannelOption text="Add Channel" />
+      <hr />
+      {channels?.docs.map((doc) => (
+        <SidebarOption key={doc.id} id={doc.id} text={doc.data().name} />
+      ))}
     </SidebarContainer>
   );
 };
@@ -28,6 +54,11 @@ const SidebarContainer = styled.div`
   border-top: 1px solid #49274b;
   max-width: 260px;
   margin-top: 60px;
+  > hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #49274b;
+  }
 `;
 const SidebarHeader = styled.div`
   display: flex;
