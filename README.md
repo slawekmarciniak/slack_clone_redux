@@ -1,1 +1,1 @@
-Slack clone with redux, styled components, react router v6, firebase hooks..
+Slack clone with redux, styled components, react router v6, firebase v9, firebase hooks..
