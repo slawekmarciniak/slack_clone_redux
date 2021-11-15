@@ -1,23 +1,21 @@
 import styled from "styled-components";
 import { db } from "../../../firebase";
-import { useDispatch } from "react-redux";
 import { addDoc, collection } from "firebase/firestore";
+import { useDispatch } from "react-redux";
 import { enterRoom } from "../../../features/appSlice";
 
 const SidebarOption = ({ Icon, text, addChannelOption, id }) => {
   const dispatch = useDispatch();
+
   const addChannel = () => {
     const channelName = prompt("Plase enter the channel name");
     if (channelName) {
-      const fc = async () => {
-        const x = await addDoc(collection(db, "rooms"), {
-          name: channelName,
-        });
-        return x;
-      };
-      fc();
+      addDoc(collection(db, "rooms"), {
+        name: channelName,
+      });
     }
   };
+
   const selectChannel = () => {
     if (id) {
       dispatch(

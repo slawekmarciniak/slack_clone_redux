@@ -1,6 +1,7 @@
 import React from "react";
-import { Routes, Switch, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
+import Chat from "./components/Chat";
 
 import "./App.css";
 
@@ -9,7 +10,7 @@ function App() {
     <div className="app">
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* <Route index element={} /> */}
+          <Route index element={<Chat />} />
           {/* <Route path="about" element={<About />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<NoMatch />} /> */}
